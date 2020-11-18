@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>开始使用layui</title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+</head>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #add {
+        float: right;
+    }
+
+    #demo1 {
+        display: none;
+    }
+
+    #show1 {
+        visibility: hidden;
+    }
+
+    #show2 {
+        visibility: hidden;
+    }
+</style>
+
+<body>
+    <div>
+        <table class="layui-table" id="mytable">
+            <colgroup>
+                <col width="150">
+                <col width="200">
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>学号</th>
+                    <th>签名</th>
+                    <th>班级</th>
+                    <th>性别</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="listTable">
+                <tr>
+                    <td>贤心</td>
+                    <td>1</td>
+                    <td>人生就像是一场修行</td>
+                    <td>1班</td>
+                    <td>女</td>
+                    <td><button class="layui-btn layui-btn-radius layui-btn-normal" onclick="modify(this)">修改</button>
+                        <button class="layui-btn layui-btn-radius layui-btn-warm" onclick="del(this)">删除</button></td>
+                </tr>
+                <tr>
+                    <td>许闲心</td>
+                    <td>2</td>
+                    <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
+                    <td>2班</td>
+                    <td>女</td>
+                    <td><button class="layui-btn layui-btn-radius layui-btn-normal" onclick="modify(this)">修改</button>
+                        <button class="layui-btn layui-btn-radius layui-btn-warm" onclick="del(this)">删除</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button id="add" class="layui-btn" value="新增" onclick="showList()">新增</button>
+
+    <div id="demo1">
+        <div>
+            <form class="layui-form" action="" id="myform">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">学生姓名</label>
+                    <div class="layui-input-block">
+                        <input id="username" type="text" required lay-verify="required" placeholder="请输入姓名"
+                            autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">学生学号</label>
+                        <div class="layui-input-block">
+                            <input id="num" name="num" type="text" required lay-verify="required" placeholder="请输入学号"
+                                autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">班级</label>
+                            <div class="layui-input-block">
+                                <select id="class" name="city" lay-verify="required">
+                                    <option value=""></option>
+                                    <option value="1班">1班</option>
+                                    <option value="2班">2班</option>
+                                    <option value="3班">3班</option>
+                                    <option value="4班">4班</option>
+                                    <option value="5班">5班</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label id="sex" class="layui-form-label" lay-verify="required">性别</label>
+                            <div class="layui-input-block">
+                                <input class="sex1" type="radio" name="sex" value="男" title="男">
+                                <input class="sex1" type="radio" name="sex" value="女" title="女">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">学生签名</label>
+                            <div class="layui-input-block">
+                                <textarea id="content" lay-verify="required" name="desc" placeholder="请输入内容"
+                                    class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button id="show1" type="button" class="layui-btn" onclick="addList()">立即添加</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                <button type="button" class="layui-btn layui-btn-primary"
+                                    onclick="hidden1()">返回</button>
+                                <button id="show2" type="button" class="layui-btn layui-btn-primary"
+                                    onclick="updata()">更新</button>
+                            </div>
+                        </div>
+                    </div>
+            </form>
+        </div>
+
+        <script src="./layui/layui.js"></script>
+        <script>
+            layui.use(['layer', 'form'], function () {
+                var layer = layui.layer,
+                    form = layui.form;
+            });
+
+            function addList() {
+                let oUser = document.getElementById('username').value
+                let oNum = document.getElementById('num').value
+                let oClass = document.getElementById("class").value
+                // let oSex = document.getElementById("sex").value
+                let oSex = document.getElementsByClassName('sex1')
+                let oTent = document.getElementById("content").value
+                let oTr = document.createElement('tr')
+                let oTd1 = document.createElement('td')
+                let oInput = document.createElement('input')
+                oTd1.appendChild(oInput)
+                let oTd2 = document.createElement('td')
+                oTd2.innerHTML = oUser
+                let oTd3 = document.createElement("td")
+                oTd3.innerHTML = oNum
+                let oTd4 = document.createElement("td")
+                oTd4.innerHTML = oTent
+                let oTd5 = document.createElement("td")
+                oTd5.innerHTML = oClass
+                let oTd6 = document.createElement("td")
+                for (let x = 0; x < oSex.length; x++) {
+                    if (oSex[x].checked) {
+                        oTd6.innerHTML = oSex[x].value
+                    }
+                }
+                let oTd7 = document.createElement('td')
+                let oInput2 = document.createElement("input")
+                let oInput3 = document.createElement("input")
+                oInput2.setAttribute('type', 'button')
+                oInput2.setAttribute('value', '修改')
+                oInput2.setAttribute('onclick', 'modify(this)')
+                oInput2.className = "layui-btn layui-btn-radius layui-btn-normal"
+                oInput3.setAttribute('type', 'button')
+                oInput3.setAttribute('value', '删除')
+                oInput3.setAttribute('onclick', 'del(this)')
+                oInput3.className = 'layui-btn layui-btn-radius layui-btn-warm'
+                oTd7.appendChild(oInput2)
+                oTd7.appendChild(oInput3)
+                // oTr.appendChild(oTd1)
+                oTr.appendChild(oTd2)
+                oTr.appendChild(oTd3)
+                oTr.appendChild(oTd4)
+                oTr.appendChild(oTd5)
+                oTr.appendChild(oTd6)
+                oTr.appendChild(oTd7)
+                let olistTable = document.getElementById("listTable")
+                olistTable.appendChild(oTr)
+                document.getElementById('myform').reset()
+            }
+
+            function modify(obj) {
+                document.getElementById('demo1').style.display = 'block'
+                document.getElementById('show2').style.visibility = 'visible'
+                document.getElementById('show1').style.visibility = 'hidden'
+                let oUser = document.getElementById('username');
+                let oNum = document.getElementById('num');
+                let oClass = document.getElementById('class');
+                let oSex = document.getElementsByName('sex');
+                let oTent = document.getElementById('content');
+                let oTr = obj.parentNode.parentNode;
+                let aTd = oTr.getElementsByTagName('td');
+                rowIndex = obj.parentNode.parentNode.rowIndex;
+                oUser.value = aTd[0].innerHTML;
+                oNum.value = aTd[1].innerHTML;
+                oTent.value = aTd[2].innerHTML;
+                for (let x = 0; x < oSex.length; x++) {
+                    if (oSex[x].value == aTd[4].innerHTML) {
+                        oSex[x].checked = true
+                        layui.use('form', function () {
+                            var form = layui.form;
+                            form.render();
+                        });
+                    }
+                }
+                for (let i = 0; i < oClass.length; i++) {
+                    if (oClass.options[i].value == aTd[3].innerHTML) {
+                        oClass.options[i].selected = true
+                        layui.use('form', function () {
+                            var form = layui.form;
+                            form.render();
+                        });
+                        break;
+                    }
+
+                }
+                console.log(aTd[3].innerHTML);
+                //alert(i);
+
+            }
+
+            function del(obj) {
+                let r = confirm("确认删除?")
+                if (r) {
+                    let oParentnode = obj.parentNode.parentNode;
+                    let olistTable = document.getElementById('listTable');
+                    olistTable.removeChild(oParentnode);
+                } else {
+
+                }
+            }
+
+
+            function updata() {
+                let oUser = document.getElementById('username');
+                let oNum = document.getElementById('num');
+                let oClass = document.getElementById('class');
+                let oSex = document.getElementsByName('sex');
+                let oTent = document.getElementById('content');
+                let oMytable = document.getElementById('mytable');
+                oMytable.rows[rowIndex].cells[0].innerHTML = oUser.value;
+                oMytable.rows[rowIndex].cells[1].innerHTML = oNum.value;
+                oMytable.rows[rowIndex].cells[2].innerHTML = oTent.value;
+                oMytable.rows[rowIndex].cells[3].innerHTML = oClass.value;
+                for (let x = 0; x < oSex.length; x++) {
+                    if (oSex[x].checked) {
+                        oMytable.rows[rowIndex].cells[4].innerHTML = oSex[x].value
+                    }
+                }
+                alert('修改成功！')
+                document.getElementById('myform').reset()
+                document.getElementById('demo1').style.display = "none"
+            }
+
+            function showList() {
+                document.getElementById('demo1').style.display = 'block'
+                document.getElementById('myform').reset()
+                document.getElementById('show2').style.visibility = 'hidden'
+                document.getElementById('show1').style.visibility = 'visible'
+            }
+
+            function hidden1() {
+                document.getElementById('demo1').style.display = "none"
+            }
+        </script>
+</body>
+
+</html>
