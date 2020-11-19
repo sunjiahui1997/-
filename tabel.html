@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>开始使用layui</title>
+    <title>layui表格</title>
     <link rel="stylesheet" href="./layui/css/layui.css">
 </head>
 
@@ -185,6 +185,7 @@
                 let olistTable = document.getElementById("listTable")
                 olistTable.appendChild(oTr)
                 document.getElementById('myform').reset()
+                alert('添加成功！')
             }
 
             function modify(obj) {
@@ -223,8 +224,6 @@
 
                 }
                 console.log(aTd[3].innerHTML);
-                //alert(i);
-
             }
 
             function del(obj) {
@@ -237,7 +236,6 @@
 
                 }
             }
-
 
             function updata() {
                 let oUser = document.getElementById('username');
